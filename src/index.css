@@ -1,0 +1,20 @@
+body {
+	background-color: #cccccc;
+	background-image: url(https://cms.mcs-rbg.de/wp-content/uploads/2016/06/Backsteinwand2.jpg);
+	background-position: left top;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.Mui-selected {
+	color: #ffffff !important;
+	background-color: #77A300 !important;
+}
+
+#colophon {
+	border-radius: 10px;
+	background: #77a300;
+	clear: both;
+	display: block;
+}
