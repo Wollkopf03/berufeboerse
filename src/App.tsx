@@ -7,8 +7,8 @@ import { User, userLoader } from './user/User';
 const theme = createTheme({
 	breakpoints: {
 		values: {
-			xs: 0,
-			sm: 0,
+			xs: 500,
+			sm: 630,
 			md: 700,
 			lg: 1000,
 			xl: 1300
