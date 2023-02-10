@@ -7,15 +7,14 @@ import { Category } from './components/Category'
 import { EntryType } from './components/Entry'
 import { LetterCard } from './components/LetterCard'
 import { LetterTab } from './components/LetterTab'
-import { SearchBar } from './components/SearchBar'
+import { Search } from './components/Search'
 
 
 export const userLoader = async () => {
 	const data: EntryType[] = await axios.get(API_BASE_URL + "load/")
 		.then((response: { data: { category: string, name: string, information: string }[] }) =>
 			response.data.map(entry => {
-				const e: EntryType = { ...entry, ...JSON.parse(entry.information) }
-				return e
+				return { ...entry, ...JSON.parse(entry.information) } as EntryType
 			}))
 		.catch(e => {
 			console.error(e)
@@ -28,7 +27,7 @@ const style = { mb: 3, textAlign: 'justify' }
 
 export function User() {
 	const { letter, category } = useParams()
-	const [visible, setVisible] = useState(true)
+	const [visible, setVisible] = useState(sessionStorage.getItem("visible") !== "false")
 	const entries = useLoaderData() as EntryType[]
 	let id = 0
 	const allCategories = [...new Set(entries.map(entry => entry.category))].sort((a, b) => a.localeCompare(b)).map(category => { return { name: category, id: String(id++) } })
@@ -39,8 +38,14 @@ export function User() {
 		if (category)
 			document.getElementById(category)?.scrollIntoView();
 	}, [category])
+
+	const close = () => {
+		setVisible(false)
+		sessionStorage.setItem("visible", "false")
+	}
+
 	return (<>
-		<Dialog onClose={() => setVisible(false)} open={visible}		>
+		<Dialog onClose={close} open={visible}>
 			<DialogTitle>
 				Vorwort
 			</DialogTitle>
@@ -70,12 +75,12 @@ export function User() {
 						</Typography>
 					</Box>
 					<Box sx={{ width: { sm: "50%", xs: "100%" } }}>
-						<img src="http://cms.mcs-rbg.de/wp-content/uploads/2023/01/Foto-Kratzke-300x200.jpg" style={{ width: "100%" }} />
+						<img alt="Marlo Kratzke" src="http://cms.mcs-rbg.de/wp-content/uploads/2023/01/Foto-Kratzke-300x200.jpg" style={{ width: "100%" }} />
 					</Box>
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				<Button autoFocus onClick={() => setVisible(false)}>
+				<Button autoFocus onClick={close}>
 					Close
 				</Button>
 			</DialogActions>
@@ -84,9 +89,9 @@ export function User() {
 			letters={[...new Set(entries.map(entry => entry.category[0].toUpperCase()))]}
 			letter={letter!}
 		/>
-		<Container maxWidth="xl" sx={{ px: "4px" }}>
+		<Container maxWidth="xl" sx={{ px: "4px", mt: 2 }}>
 			{letter === "search" &&
-				<SearchBar entries={entries} />}
+				<Search entries={entries} categories={allCategories} />}
 			{letter === "home" &&
 				<Button variant="outlined" onClick={() => setVisible(true)}>
 					Vorwort
