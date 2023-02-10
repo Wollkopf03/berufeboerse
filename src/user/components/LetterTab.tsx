@@ -13,7 +13,7 @@ export const LetterTab = ({ letters, letter }: Props) => {
 		value={letter}
 		exclusive
 		fullWidth
-		onChange={(_event, value) => navigate("/" + value)}
+		onChange={(_event, value) => navigate("/" + (value || "home"))}
 	>
 		<ToggleButton value="home"><Home /></ToggleButton>
 		{letters.sort().map(letter => <ToggleButton key={letter} value={letter}>{letter}</ToggleButton>)}

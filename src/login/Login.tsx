@@ -23,7 +23,7 @@ export async function authenticate(credentials: Credentials): Promise<{ token?: 
 	return data
 }
 
-export default function Login() {
+export function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState<string | undefined>();

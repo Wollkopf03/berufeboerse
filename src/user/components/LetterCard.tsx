@@ -1,17 +1,18 @@
-import { Grid, Paper, Typography } from "@mui/material"
+import { Grid, Link, Paper } from "@mui/material"
 
 export type CardType = {
 	letter: string,
-	categories: string[],
+	categories: { name: string, id: string }[],
 }
 
-export const LetterCard = (entry: CardType) =>
+export const LetterCard = ({ letter, categories }: CardType) =>
 	<Grid item xl={3} lg={4} md={6} sm={12}>
 		<Paper variant="outlined" sx={{ p: 2, wordBreak: "break-word" }}>
-			<strong>{entry.letter}</strong><br />
-			{entry.categories.map((category, key) =>
-				<Typography variant='body1' key={key}>
-					{category}
-				</Typography>)}
+			<strong>{letter}</strong><br />
+			{categories.map((category, key) => <p key={key}>
+				<Link href={"/" + letter + "/" + category.id}>
+					{category.name}
+				</Link>
+			</p>)}
 		</Paper>
 	</Grid>

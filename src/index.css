@@ -1,3 +1,7 @@
+html {
+	scroll-behavior: smooth;
+}
+
 body {
 	background-color: #cccccc;
 	background-image: url(https://cms.mcs-rbg.de/wp-content/uploads/2016/06/Backsteinwand2.jpg);
